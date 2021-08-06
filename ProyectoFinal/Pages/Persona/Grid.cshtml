@@ -35,26 +35,26 @@
                         <tbody>
                             @foreach (var item in Model.GridList)
                             {
-                            <tr>
-                                <td>@item.IdPersona</td>
-                                <td>@item.Cedula</td>
-                                <td>@item.Nombre</td>
-                                <td>@item.Primer_Apellido</td>
-                                <td>@item.Segundo_Apellido</td>
-                                <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
-                                <td>@item.Telefono</td>
-                                <td>@item.Direccion</td>
-                                <td>@(item.Estado?"Activo":"Inactivo")</td>
-                                <td>
-                                    <a class="btn btn-primary" asp-page="Edit" asp-route-id="@item.IdPersona">
-                                        <i class='bx bx-edit-alt'></i>
-                                    </a>
-                                    <button type="button" class="btn btn-primary"
-                                            onclick="PersonaGrid.OnClickEliminar(@item.IdPersona)">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@item.IdPersona</td>
+                                    <td>@item.Cedula</td>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Primer_Apellido</td>
+                                    <td>@item.Segundo_Apellido</td>
+                                    <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.Telefono</td>
+                                    <td>@item.Direccion</td>
+                                    <td>@(item.Estado?"Activo":"Inactivo")</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-page="Edit" asp-route-id="@item.IdPersona">
+                                            <i class='bx bx-edit-alt'></i>
+                                        </a>
+                                        <button type="button" class="btn btn-primary"
+                                                onclick="PersonaGrid.OnClickEliminar(@item.IdPersona)">
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </td>
+                                </tr>
 
                             }
 
@@ -72,10 +72,8 @@
 </div>
 
 @section Scripts{
-    <script>
-        var MensajeApp = "@Html.Raw(Model.Mensaje)";
-    </script>
-    <script defer src="~/App/Persona/Grid.js"></script>
+
+    <script src="~/App/Persona/Grid.js"></script>
 
 }
 

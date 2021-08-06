@@ -14,6 +14,31 @@
                 setTimeout(() => {
                     BValidateData(this.Formulario);
                 }, 200);
+            },
+
+                        Save() {
+                if (BValidateData(this.Formulario)) {
+                    Loading.fire("Guardando...");
+                    App.AxiosProvider.PersonaGuardar(this.Entity).then(
+                        data => {
+                            Loading.close();
+
+                            if (data.CodeError == 0) {
+                                Toast.fire({ title: "Se guardó satisfactoriamente", icon: "success" }).then(() => window.location.href = "Persona/Grid");
+
+                            } else {
+
+                                Toast.fire({ title: data.MsgError, icon: "error" })
+                            }
+
+                        }
+                    );
+
+                }
+                else {
+                    Toast.fire({ title: "Por favor complete los campos requeridos", icon: "error" });
+                }
+
             }
         },
 

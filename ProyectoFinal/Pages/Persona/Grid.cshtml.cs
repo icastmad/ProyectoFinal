@@ -21,19 +21,12 @@ namespace WebApplication.Pages.Persona
 
         public IEnumerable<PersonaEntity> GridList { get; set; } = new List<PersonaEntity>();
 
-        public string Mensaje { get; set; } = "";
+
         public async Task<IActionResult> OnGet()
         {
             try
             {
                 GridList = await personaService.Get();
-
-                if (TempData.ContainsKey("Msg"))
-                {
-                    Mensaje = TempData["Msg"] as string;
-                }
-
-                TempData.Clear();
                 return Page();
             }
             catch (Exception ex)
@@ -44,7 +37,7 @@ namespace WebApplication.Pages.Persona
 
         }
 
-        public async Task<IActionResult> OnGetELiminar(int id)
+        public async Task<IActionResult> OnDeleteELiminar(int id)
         {
             try
             {
@@ -55,20 +48,13 @@ namespace WebApplication.Pages.Persona
                    IdPersona = id
                 });
 
-                if (result.CodeError != 0)
-                {
-                    throw new Exception(result.MsgError);
-                }
-
-                TempData["Msg"] = "El registro ha sido eliminado";
-
-                return Redirect("Grid");
+                return new JsonResult(result);
 
             }
             catch (Exception ex)
             {
 
-                return Content(ex.Message);
+                return new JsonResult(new DBEntity { CodeError = ex.HResult, MsgError = ex.Message });
             }
 
         }

@@ -25,6 +25,7 @@ namespace WebApplication.Pages.Persona
         public int? id { get; set; }
 
         [BindProperty]
+        [FromBody]
         public PersonaEntity Entity { get; set; } = new PersonaEntity();
        
 
@@ -51,42 +52,23 @@ namespace WebApplication.Pages.Persona
         {
             try
             {
+                var result = new DBEntity();
                 if (Entity.IdPersona.HasValue)
                 {
                     //Actualizar
-                    var result = await personaService.Update(Entity);
-
-                    if (result.CodeError != 0)
-                    {
-                        TempData["Msg"] = "Hubo algun error en el ingreso, favor verificar";
-                    }
-                    else
-                    {
-                        TempData["Msg"] = "El registro ha sido actualizado";
-                    }
+                    result = await personaService.Update(Entity);
                 }
                 else
                 {
                     //Nuevo Registro
-                    var result = await personaService.Create(Entity);
-
-                    if (result.CodeError != 0)
-                    {
-                        TempData["Msg"] = "Hubo algun error en el ingreso, favor verificar";
-
-                    }
-                    else
-                    {
-                        TempData["Msg"] = "El registro ha sido ingresado";
-                    }
-
+                  result = await personaService.Create(Entity);
                 }
 
-                return RedirectToPage("Grid");
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                return new JsonResult(new DBEntity { CodeError = ex.HResult, MsgError = ex.Message });
             }
         }
     }
